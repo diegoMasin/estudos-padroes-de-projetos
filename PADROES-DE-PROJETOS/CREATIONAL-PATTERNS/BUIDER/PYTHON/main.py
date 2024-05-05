@@ -1,36 +1,35 @@
-class Car:
-    def __init__(self, model, color, wheels, engine):
-        self.model = model
-        self.color = color
-        self.wheels = wheels
-        self.engine = engine
+class Order:
+    def __init__(self, products=None, address=None, total=0):
+        self.products = products if products else []
+        self.address = address
+        self.total = total
 
     def __str__(self):
-        return f"Modelo: {self.model}, Cor: {self.color}, Rodas: {self.wheels}, Motor: {self.engine}"
+        product_list = "\n".join(
+            [f"- {product['name']}: {product['quantity']}" for product in self.products])
+        return f"Pedido:\nProdutos:\n{product_list}\nEndereço de entrega: {self.address}\nTotal: R${self.total:.2f}"
 
 
-class CarBuilder:
+class OrderBuilder:
     def __init__(self):
-        self.car = None
+        self.order = Order()
 
-    def set_model(self, model):
-        self.car.model = model
+    def add_product(self, name, quantity):
+        self.order.products.append({'name': name, 'quantity': quantity})
         return self
 
-    def set_color(self, color):
-        self.car.color = color
+    def set_address(self, address):
+        self.order.address = address
         return self
 
-    def set_wheels(self, wheels):
-        self.car.wheels = wheels
-        return self
-
-    def set_engine(self, engine):
-        self.car.engine = engine
+    def calculate_total(self):
+        # Lógica para calcular o total do pedido baseado nos produtos
+        self.order.total = sum(
+            product['quantity'] * 10 for product in self.order.products)
         return self
 
     def build(self):
-        return self.car
+        return self.order
 
 
 class Director:
@@ -38,17 +37,16 @@ class Director:
         self.builder = builder
 
     def construct(self):
-        self.builder.set_model("Sedan") \
-            .set_color("Preto") \
-            .set_wheels(4) \
-            .set_engine("Motor a combustão")
-
+        self.builder.add_product("Camisa", 2) \
+                    .add_product("Calça", 1) \
+                    .set_address("Rua Principal, 123") \
+                    .calculate_total()
         return self.builder.build()
 
 
-# Uso do Builder
-builder = CarBuilder()
+# Uso do Builder com Director
+builder = OrderBuilder()
 director = Director(builder)
-car = director.construct()
+order = director.construct()
 
-print(car)
+print(order)

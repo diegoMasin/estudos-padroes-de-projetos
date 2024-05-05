@@ -15,6 +15,7 @@
   - Builder é basicamente você extrair o código de construção do objeto de sua própria classe e o move-lo para objetos separados chamados construtores (por isso, "construir por partes").
   - O Builder também não permite que outros objetos acessem o objeto alvo enquanto ele estiver sendo construído.
   - Podemos inclusive ter outros tipos de objetos construtores para construir uma versão específica com detalhes específicos do objeto alvo. Exempo o Objeto alvo é Casa, e criamos o objeto BuilderCasa que constroi tanto casas pequenas como casas grandes com diversos e imagináveis atributos que uma casa grande poderia ter, porem também podemos criar navas classes construtores de casas específicas como por exemplo: BuilderCastelo, BuilderCasaCampo, BuilderCasaExterior, etc;
+  - Não é necessário utilizar uma classe director, quando necessário para organização
 
 ## Dúvidas / Discussão em grupo
 
